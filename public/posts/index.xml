@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Maror Security</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on Maror Security</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Sep 2024 05:22:18 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>First Post</title>
+      <link>http://localhost:1313/posts/first-post/</link>
+      <pubDate>Sat, 07 Sep 2024 05:22:18 -0400</pubDate>
+      <guid>http://localhost:1313/posts/first-post/</guid>
+      <description>First post!&#xA;Thanks for visiting my blog. I&amp;rsquo;m just getting things cranking around here, but let me explain to you who I am and what I&amp;rsquo;m up to.&#xA;I&amp;rsquo;m Mike Doyle and Maror Security is my consultancy. When I entered the computer science program at The Georgia Institute of Technology, I wanted to be a hotshot systems programmer.</description>
+    </item>
+  </channel>
+</rss>

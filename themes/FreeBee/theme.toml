@@ -1,0 +1,14 @@
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+name = "FreeBee"
+license = "MIT"
+licenselink = "https://github.com/marorsecurity/FreeBee/blob/master/LICENSE"
+description = "FreeBee is an elegant, clean Hugo Theme based on NewBee."
+homepage = "https://github.com/marorsecurity/FreeBee/"
+tags = ["blog", "clean", "responsive", "high-interaction", "theme"]
+features = ["Neumorphism", "syntax-highlighting", "high interaction"]
+
+[author]
+  name = "Mike Doyle"
+  homepage = "https://github.com/marorsecurity"

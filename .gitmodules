@@ -1,0 +1,3 @@
+[submodule "themes/FreeBee"]
+	path = themes/FreeBee
+	url = https://github.com/marorsecurity/FreeBee
