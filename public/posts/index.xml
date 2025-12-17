@@ -6,14 +6,21 @@
     <description>Recent content in Posts on Maror Security</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Sep 2024 12:14:10 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 17 Dec 2025 17:11:40 -0500</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Unemployment_incident_recovery_resources</title>
+      <title>Header Files of Stevens</title>
+      <link>http://localhost:1313/posts/header-files-of-stevens/</link>
+      <pubDate>Wed, 17 Dec 2025 17:11:40 -0500</pubDate>
+      <guid>http://localhost:1313/posts/header-files-of-stevens/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Unemployment incident recovery resources</title>
       <link>http://localhost:1313/posts/unemployment_incident_recovery_resources/</link>
       <pubDate>Sat, 21 Sep 2024 12:14:10 -0400</pubDate>
       <guid>http://localhost:1313/posts/unemployment_incident_recovery_resources/</guid>
-      <description></description>
+      <description>Thank you for attending my talk, &amp;ldquo;Executing your unemployment incident response plan.&amp;rdquo; Slides will be posted eventually. Here are some resources I mentioned.&#xA;Negotiating Your Salary: How To Make $1000 a Minute on Amazon. This isn&amp;rsquo;t an affiliate link. I&amp;rsquo;m not above affiliate links, I&amp;rsquo;m just too lazy or busy to get one set up right now.</description>
     </item>
     <item>
       <title>First Post</title>

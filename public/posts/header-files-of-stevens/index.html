@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Maror Security | Source dive: the header files of W. Richard Stevens</title>
+    <meta name="description" content="I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.
+Source diving is a term borrowed from players and hackers of the rogue-like video game NetHack to describe a method of examining the source code of a system. ">
+    <link rel="canonical" href="http://localhost:1313/posts/header-files-of-stevens/" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta property="og:title" content="Source dive: the header files of W. Richard Stevens" />
+<meta property="og:description" content="I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.
+Source diving is a term borrowed from players and hackers of the rogue-like video game NetHack to describe a method of examining the source code of a system." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/header-files-of-stevens/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-12-17T17:11:40-05:00" />
+<meta property="article:modified_time" content="2025-12-17T17:11:40-05:00" />
+
+    <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Source dive: the header files of W. Richard Stevens"/>
+<meta name="twitter:description" content="I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.
+Source diving is a term borrowed from players and hackers of the rogue-like video game NetHack to describe a method of examining the source code of a system."/>
+
+    
+
+    
+    <link rel="stylesheet" href='/css/style.css' />
+    
+    <link rel="stylesheet" href='/css/search.css' />
+    
+    <link rel="stylesheet" href='/css/md_nb.css' />
+    <link rel="stylesheet" href='/css/list.css' />
+    <link rel="stylesheet" href='/css/terms.css' />
+    <link rel="stylesheet" href='/css/taxonomy.css' />
+    
+    <link rel="stylesheet" href='/css/font-awesome-4.7.0/css/font-awesome.min.css' />
+    <link rel="stylesheet" href='/css/home.css' />
+    
+    <link rel="stylesheet" href='/css/syntax.css' />
+    
+    <link rel="stylesheet" href='/css/shortcode.css' />
+    
+    
+    
+    <link rel="stylesheet" href='/css/custom.css' />
+    <style>
+         
+    </style>
+    
+    
+    
+    
+    <script src="/js/lazysizes.min.js" async=""></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/md_nb.js"></script>
+    <script src="/js/yes.js"></script>
+</head>
+<body style="font-family: ,'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;">
+        <div class="loading">
+            <div class="loading-bg"></div>
+            <div class="loading-long">
+                <div class="loading-short"></div>
+            </div>
+        </div>
+
+        <header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">
+                <span class="logo">Maror Security</span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+                <a href="/">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-home'></i> home</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/posts">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-book'></i> all posts</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/categories">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-folder-open'></i> categories</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/tags">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-tags'></i> tags</div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/about">
+                    <div class="menu-item">
+                        <div class="hengtiao-root">
+                            <div class="hengtiao"></div>
+                            <div class="name text-wbd-reverse"><i class='fa fa-info-circle'></i> about</div>
+                        </div>
+                    </div>
+                </a>
+            
+            <div class="navbar-burger">
+                <div class="burger-btn"><span><i class="fa fa-navicon"></i></span></div>
+            </div>
+            
+            
+            <div class="search-in"><span><i class="fa fa-search"></i></span></div>
+            
+                <div class="mode">
+                    <span class="sun"><i class="fa fa-sun-o"></i></span>
+                    <span class="moon"><i class="fa fa-moon-o"></i></span>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="burger-items">
+        
+        <a href="/">
+            <div class="burger-item">
+                <i class='fa fa-home'></i> home
+            </div>
+        </a>
+        
+        <a href="/posts">
+            <div class="burger-item">
+                <i class='fa fa-book'></i> all posts
+            </div>
+        </a>
+        
+        <a href="/categories">
+            <div class="burger-item">
+                <i class='fa fa-folder-open'></i> categories
+            </div>
+        </a>
+        
+        <a href="/tags">
+            <div class="burger-item">
+                <i class='fa fa-tags'></i> tags
+            </div>
+        </a>
+        
+        <a href="/about">
+            <div class="burger-item">
+                <i class='fa fa-info-circle'></i> about
+            </div>
+        </a>
+        
+    </div>
+    <div class="header-rest"></div>
+</header>
+
+
+        <div id="content">
+
+
+
+
+
+
+
+
+    <div class="hero">
+        
+            <div class="hero-img">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/default.jpg" alt="">
+            </div>
+        
+        <div class="hero-content">
+            <div class="hero-title">Source dive: the header files of W. Richard Stevens</div>
+            <div class="hero-subtitle"></div>
+            <div class="hero-date">
+                    <span class="no-wrap"><i class="fa fa-calendar"></i> postedOn: 2025-12-17 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-calendar-check-o"></i> updatedOn: 2025-12-17 &nbsp;</span>
+                    <span class="no-wrap"><i class="fa fa-folder"></i>
+                        notIncluded
+                        
+                    </span>    
+            </div>
+            <div class="timelong">
+                <span class="no-wrap"><i class="fa fa-pencil"></i> wordsCount: 952 &nbsp;</span>
+                <span class="no-wrap"><i class="fa fa-clock-o"></i> readingTime: 5 mins &nbsp;</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<div class="zhuti-0">
+    <div class="container">
+        <div class="zhuti">
+            <div class="zhuti-l">
+                
+
+
+
+
+    
+
+
+<div class="content-root">
+    <div class="long">
+        <button class="tosides-1 text-wbd">
+            <i class="fa fa-arrow-right"></i>
+        </button>
+        <button class="tosides-2 text-wbd">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <button class="toup text-wbd">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
+    
+        <div class="content">
+            <div class="content-self">
+                <p>I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.</p>
+<p><em>Source diving</em> is a term borrowed from players and hackers of the <a href="https://nethackwiki.com/wiki/Source_diving">rogue-like video game NetHack</a> to describe a method of examining  the source code of a system. To source dive is not merely to read through code; it is a deliberate and judicious undertaking. It requires code written deliberately and judiciously.</p>
+<p>I want to start off small and look at the works of W. Richard Stevens, author of TCP/IP Illustrated, Unix Network Programming, and Advanced Programming in the Unix Environment, as well as a half-bakers dozen of the RFCs that describe the protocols that make our internet. In an appendix in each of his major books, Stevens included a C header file to assist his readers in copying, compiling, modifying, and hacking the code examples in his books, as well as a set of error-handling and logging functions that can be used to keep code readers and writers happy.</p>
+<p>I&rsquo;d like to look at these in turn starting with the header file but first a note on copyright. Per <a href="http://www.kohala.com/start/rstevensfaq.html">the author&rsquo;s faq</a>, <em>&ldquo;my publishers graciously allow all the code to be made available, but the code is provided &ldquo;as is&rdquo; with no support implied.&rdquo;</em> While not an open source license, I&rsquo;ll interpret this as meaning that we can copy, discuss, and consider improvements to his code. These expensive books are valuable because they help us become better software developers, <em>and they are worth it.</em> Their publisher, Addison Wesley, would undercut their own value proposition if they were to try to undercut that of their readers.</p>
+<p>The header file<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> starts with a comment:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/* Our own header, to be included before all standard system headers */</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Stevens uses the portable <code>/* ... */</code> comment style rather than the svelte <code>// ...</code> which works with most modern C compilers because portability trumps trendiness whenever programmers can&rsquo;t be bothered to revisit old code. Notice, though, the prefatory clause: <code>Our own header...,</code>. To whom is he referring? The authors and readers? Or just the authors? A hint lies in the operative clause: <code>to be included before all standard system headers</code>. So then this file exists for all who might include it. If you were to put a similar prescription in a header file in your open source project, it would apply to the maintainers of that project. Because the code in this book was meant to be worked with by the reader, herein, author and reader are one and the same.</p>
+<p>Next is a construction familiar to most C developers:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#ifndef _APUE_H
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _APUE_H
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>which is matched at the last line of the file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#endif </span><span class="cm">/* _APUE_H */</span><span class="cp">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>This ensures that should the preprocessor include this header file twice in the same source file, either through straight-forward repetition or, more likely, because a source file includes two header files which each include this one, that the contents of this file are only supplied once, the first time the file is referenced.</p>
+<p>The next line,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#define _XOPEN_SOURCE 600
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>politely asks the underlying system to please serve up version 3 of the Single Unix Specification. Old Stevens heads like to get chapter and verse when it comes to the various attempts at standardization to make different flavors of Unix behave in unsurprising ways and Stevens devotes his second Chapter of APUE to describing them. This <code>#define</code> is here basically to state &ldquo;if you behave like SUSv3, the bugs are all on me.&rdquo;</p>
+<p>After this follows a variety of <code>#include</code>s of generally useful header files, with a few interesting constructions:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/termios.h&gt;	</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#ifndef TIOCGWINSZ
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/ioctl.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>If  <code>sys/termios.h</code> doesn&rsquo;t provide the definition of <code>TIOCGWINSZ</code>, <code>sys/ioctl.h</code> will. Which Unices define this symbol where? <a href="https://www.tuhs.org/cgi-bin/utree.pl?file=NetBSD-5.0.2/lib/libcurses/setterm.c">NetBSD 5.0.2</a> says that &ldquo;old systems&rdquo; define it in <code>sys/ioctl.h</code> and it is copyright 1994, so. This is one of those niggling little factoids of portability that everyone loathes knowing, despises remembering, and never under any circumstances wants to be bitten by.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#define MAXLINE 4096          </span><span class="cm">/* max line length */</span><span class="cp">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Some, but not all, library functions will insist that you identify a maximum line length, and whatever you use should be uniform across your program. Stevens uses 4096 for lots of default buffer sizes. Hereafter, Stevens defines some default filesystem permission modes and fills in a possible signal gap and gives us two convenience macros:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#define min(a,b) ((a) &lt; (b) ? (a) : (b))
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define max(a,b) ((a) &gt; (b) ? (a) : (b))
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>which are defined as macros so that you can call them with any numeric data type and in fact can mix ints and floats:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">f</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>does what you think it will! But <code>int j - max(++i, f);</code> might not. We&rsquo;ll return to this in a future post.</p>
+<p>After this, <code>apue.h</code> declares prototypes for all functions in the book so that any function can call any other function. Larger projects might not want global visibility across all functions, but larger projects are free to have many, smaller include files.</p>
+<p>Next time we&rsquo;ll look at Stevens&rsquo; error handling routines and talk about where Golang learned the wrong lesson from C.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>I&rsquo;m using Appendix B.1 from &ldquo;Advanced Programming in the UNIX™ Environment&rdquo;, Second Edition, which he co-authored with Stephen A. Rago, but the themes we consider will apply throughout his work. His network-oriented works will have more networking material. His inter-process communication work will have stuff for that stuff.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+            </div>
+            
+                <div class="tags">
+                    
+                </div>
+            
+        </div>
+        
+            
+                <div class="pre-next">
+                    
+    
+        
+        <a href="http://localhost:1313/posts/unemployment_incident_recovery_resources/" class="pre pre-last" style="text-align: center;">
+            <span class="pre-icon"><i class="fa fa-hand-o-left"></i></span>
+            <div class="pre-title-root">
+                <span>Unemployment incident recovery resources</span>
+            </div>
+        </a>
+        
+    
+    
+
+                </div>
+            
+        
+    
+</div>
+
+    
+
+
+            </div>
+            <div class="zhuti-r">
+                
+<div class="zhuti-r-0">
+    <div class="zhuti-r-1">
+        
+        <div id="r1">
+            
+
+<div class="about-zuozhe">
+    <div class="zuozhe">
+        
+            <div class="datou">
+                <img class="lazyload" src="/images/thumbnail.gif" data-src="/images/author.jpeg" alt="">
+            </div>
+        
+        <div class="name-jianjie">
+            <div class="name">Mike Doyle</div>
+            <div class="jianjie">
+                Founding Principal
+            </div>
+        </div>
+    </div>
+
+    <div class="type">
+        <a href='
+                    /posts/
+                '>
+            <p>posts</p>
+            <p>3</p>
+        </a>
+        <a href='
+                    /categories/
+                '>
+            <p>categories</p>
+            <p>0</p>
+        </a>
+        <a href='
+                    /tags/
+                '>
+            <p>tags</p>
+            <p>0</p>
+        </a>
+    </div>
+
+    <a href="https://github.com/marorsecurity">
+        <div class="follow">Follow Me</div>
+    </a>
+    <div class="link">
+        
+        <a href="https://github.com/marorsecurity" class="link-item is-hidden-desktop" title="github">
+            <span class="icon"><i class='fa fa-github'></i></span>
+        </a>
+        
+        <a href="https://www.x.com/fe3mike" class="link-item is-hidden-desktop" title="twitter">
+            <span class="icon"><i class='fa fa-twitter'></i></span>
+        </a>
+        
+    </div>
+</div>
+            <div class="mulu">
+    <div class="dong"></div>
+    <div class="zhi">
+        <div class="wenzi">
+            <div class="zhi-mulu text-wbd">Table of Contents</div>
+            <div class="mulu-items">
+            </div>
+        </div>
+    </div>
+</div>
+            
+
+
+
+    
+    
+
+
+<div class="other">
+    <div class="other-up">
+        <div class="other-qita text-wbd">Related Posts</div>
+        <div class="xian"></div>
+    </div>
+    <div class="list">
+        
+    </div>
+</div>
+        </div>
+        <div id="r2">
+            
+        </div> 
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+
+        <footer class="footer">
+    
+        <div class="container">
+            <div class="footer-items">
+                
+                    <div class="footer-item">
+                        © 2024-2025 <a href="https://github.com/marorsecurity">Mike Doyle</a>
+                    </div>
+                
+                
+                    <div class="footer-item">
+                        Theme by <a href="https://github.com/marorsecurity/FreeBee">FreeBee</a> | Powered by <a href="https://gohugo.io/">Hugo</a>
+                    </div>
+                
+            </div>
+        </div>
+    
+
+    
+</footer>
+
+
+        
+        <div class="search-root">
+    <div class="search-zz"></div>
+    <div class="search">
+        <div class="sheader anniu">
+            <div class="sh-l">
+                <input type="text" placeholder='Enter a KeyWord' id="search-key">
+                <span class="sclear"><i class="fa fa-close"></i></span>
+            </div>
+            <div class="sh-r">
+                <button>search</button>
+            </div>
+        </div>
+        <div class="sbody">
+            <div class="sbody-1">
+                <div class="stip"></div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+    
+    
+
+    
+    
+
+    
+    
+
+
+
+
+<script type="text/javascript">
+    var mode_custom = "auto";
+    var postsCount =  3 ;
+    var arrPosts = [{"link":"http://localhost:1313/posts/header-files-of-stevens/","plain":"I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.\nSource diving is a term borrowed from players and hackers of the rogue-like video game NetHack to describe a method of examining the source code of a system. To source dive is not merely to read through code; it is a deliberate and judicious undertaking. It requires code written deliberately and judiciously.\nI want to start off small and look at the works of W. Richard Stevens, author of TCP/IP Illustrated, Unix Network Programming, and Advanced Programming in the Unix Environment, as well as a half-bakers dozen of the RFCs that describe the protocols that make our internet. In an appendix in each of his major books, Stevens included a C header file to assist his readers in copying, compiling, modifying, and hacking the code examples in his books, as well as a set of error-handling and logging functions that can be used to keep code readers and writers happy.\nI\u0026rsquo;d like to look at these in turn starting with the header file but first a note on copyright. Per the author\u0026rsquo;s faq, \u0026ldquo;my publishers graciously allow all the code to be made available, but the code is provided \u0026ldquo;as is\u0026rdquo; with no support implied.\u0026rdquo; While not an open source license, I\u0026rsquo;ll interpret this as meaning that we can copy, discuss, and consider improvements to his code. These expensive books are valuable because they help us become better software developers, and they are worth it. Their publisher, Addison Wesley, would undercut their own value proposition if they were to try to undercut that of their readers.\nThe header file1 starts with a comment:\n1 /* Our own header, to be included before all standard system headers */ Stevens uses the portable /* ... */ comment style rather than the svelte // ... which works with most modern C compilers because portability trumps trendiness whenever programmers can\u0026rsquo;t be bothered to revisit old code. Notice, though, the prefatory clause: Our own header...,. To whom is he referring? The authors and readers? Or just the authors? A hint lies in the operative clause: to be included before all standard system headers. So then this file exists for all who might include it. If you were to put a similar prescription in a header file in your open source project, it would apply to the maintainers of that project. Because the code in this book was meant to be worked with by the reader, herein, author and reader are one and the same.\nNext is a construction familiar to most C developers:\n1 2 #ifndef _APUE_H #define _APUE_H which is matched at the last line of the file:\n1 #endif /* _APUE_H */ This ensures that should the preprocessor include this header file twice in the same source file, either through straight-forward repetition or, more likely, because a source file includes two header files which each include this one, that the contents of this file are only supplied once, the first time the file is referenced.\nThe next line,\n1 #define _XOPEN_SOURCE 600 politely asks the underlying system to please serve up version 3 of the Single Unix Specification. Old Stevens heads like to get chapter and verse when it comes to the various attempts at standardization to make different flavors of Unix behave in unsurprising ways and Stevens devotes his second Chapter of APUE to describing them. This #define is here basically to state \u0026ldquo;if you behave like SUSv3, the bugs are all on me.\u0026rdquo;\nAfter this follows a variety of #includes of generally useful header files, with a few interesting constructions:\n1 2 3 4 #include \u0026lt;sys/termios.h\u0026gt;\t#ifndef TIOCGWINSZ #include \u0026lt;sys/ioctl.h\u0026gt; #endif If sys/termios.h doesn\u0026rsquo;t provide the definition of TIOCGWINSZ, sys/ioctl.h will. Which Unices define this symbol where? NetBSD 5.0.2 says that \u0026ldquo;old systems\u0026rdquo; define it in sys/ioctl.h and it is copyright 1994, so. This is one of those niggling little factoids of portability that everyone loathes knowing, despises remembering, and never under any circumstances wants to be bitten by.\n1 #define MAXLINE 4096 /* max line length */ Some, but not all, library functions will insist that you identify a maximum line length, and whatever you use should be uniform across your program. Stevens uses 4096 for lots of default buffer sizes. Hereafter, Stevens defines some default filesystem permission modes and fills in a possible signal gap and gives us two convenience macros:\n1 2 #define min(a,b) ((a) \u0026lt; (b) ? (a) : (b)) #define max(a,b) ((a) \u0026gt; (b) ? (a) : (b)) which are defined as macros so that you can call them with any numeric data type and in fact can mix ints and floats:\n1 2 3 float f = 5.0; int i = 6; int j = max(i, f); does what you think it will! But int j - max(++i, f); might not. We\u0026rsquo;ll return to this in a future post.\nAfter this, apue.h declares prototypes for all functions in the book so that any function can call any other function. Larger projects might not want global visibility across all functions, but larger projects are free to have many, smaller include files.\nNext time we\u0026rsquo;ll look at Stevens\u0026rsquo; error handling routines and talk about where Golang learned the wrong lesson from C.\nI\u0026rsquo;m using Appendix B.1 from \u0026ldquo;Advanced Programming in the UNIX™ Environment\u0026rdquo;, Second Edition, which he co-authored with Stephen A. Rago, but the themes we consider will apply throughout his work. His network-oriented works will have more networking material. His inter-process communication work will have stuff for that stuff.\u0026#160;\u0026#x21a9;\u0026#xfe0e;\n","pubDate":"2025-12-17","title":"Source dive: the header files of W. Richard Stevens"},{"link":"http://localhost:1313/posts/unemployment_incident_recovery_resources/","plain":"Thank you for attending my talk, \u0026ldquo;Executing your unemployment incident response plan.\u0026rdquo; Slides will be posted eventually. Here are some resources I mentioned.\nNegotiating Your Salary: How To Make $1000 a Minute on Amazon. This isn\u0026rsquo;t an affiliate link. I\u0026rsquo;m not above affiliate links, I\u0026rsquo;m just too lazy or busy to get one set up right now.\nManager Tools has podcasts on career management topics including interviewing, résumé creation, unemployment, and keeping a job.\nNIST 800-61 is not designed to help you get a new job, but who knows?\nOutkast - The Videos because I used visuals from \u0026ldquo;Hey Ya!\u0026rdquo; BUT ALSO BECAUSE it\u0026rsquo;s great to see this duo develop as musicians. Yes, I own a copy of this DVD.\nScholarships to the Waking Up App are available for folks who could benefit from mindfulness meditation, but whose financial circumstances preclude paying for a membership. If this app benefits you during your period of unemployment, consider becoming a member when you start getting a paycheck.\nThanks again!\n-Doyle\n","pubDate":"2024-09-21","title":"Unemployment incident recovery resources"},{"link":"http://localhost:1313/posts/first-post/","plain":"First post!\nThanks for visiting my blog. I\u0026rsquo;m just getting things cranking around here, but let me explain to you who I am and what I\u0026rsquo;m up to.\nI\u0026rsquo;m Mike Doyle and Maror Security is my consultancy. When I entered the computer science program at The Georgia Institute of Technology, I wanted to be a hotshot systems programmer. Back then, almost nobody was getting paid to hack the linux kernel, so I didn\u0026rsquo;t know how I was going to make this happen, but I had spunk.\nUnlike a lot of programs at the time that taught a full curriculum in Java, C#, or Lisp, Ma Tech wanted her engineers to be helluva no matter what the task was at hand. She started us off on a Pascal-like pseudocode, then Java, then C. After that there was a mandatory course on programming language concepts utilizing Sebesta\u0026rsquo;s wonderful work on the subject, and then students were off to find what parts of the science tickled their fancy.\nAdapting to this flexibility definitely helped me out later, as we\u0026rsquo;ll see.\nIn addition to the usual college stuff, I spent nights reading t-files, phrack, and the Cult of the Dead Cow. I read through the source to Back Orifice. I regularly dropped by the first (and perhaps only???) brick and mortar store dedicated to open source software, the Linux General Store. I built from source, screwed around with all the different distros, and took systems and networks specialization courses. I got work as a TA, finding bugs in student\u0026rsquo;s C code.\nI begrudgingly took a databases class. Definitely helped me later, as we\u0026rsquo;ll see.\nI got out in \u0026lsquo;03, smack dab in the middle of the dot bomb error. no one was hiring entry level system engineers, every place had a hiring freeze. I got sysadmin work, trying to edge my way into development. This was back when Dev and Ops were like Bloods and Crips though. Fortunately, found out that you could get paid to hack into computers, so I made my way into information security, and then into penetration testing at Cigital, where my systems development knowledge, database knowledge, and experience finding deep bugs in systems code proved very useful.\nIn 2023 I was working in supply chain security, and decided to whip up a little project to protect dev environments from malicious dependencies. It was stuff I already knew how to do in C: chroot, drop privs, fork and exec, so I decided to try writing it in the up and coming Rust language.\nThis was a true \u0026ldquo;Like A Virgin\u0026rdquo; moment for me. In the past if I wanted to pick up a programming language, I just did it. I picked up Go and developed a highly well-received course on developing Go securely in just a few months.\nI appreciate the way that Rust uses enums to eliminate classes of defects that stem from not exhaustively checking return types. I appreciate the way the ownership system encourages developers to develop zero-copy interfaces to eliminate wasted cycles and memory.\nBut yowza is it hard to learn to write code that compiles cleanly.\nSo this blog is going to document my journey as a learner. Because Rust changes all the time, I\u0026rsquo;m building this in hugo on GitHub pages, so I can revision control posts, (I hate it when an awesome post from just a few years ago stops working because some aspect of the language changed!) and keep them relevant, as well as get pull requests from the community when they find bugs, obsolescences, and typos.\nI\u0026rsquo;m also going to use this as my own open reference work. Expect a mix of short posts and links to cool stuff mixed in with longer technical content. Expect infosec content that isn\u0026rsquo;t related to Rust, or systems development, or programming at all. Expect that something gets too deep for me to explain on Discord or X and I have to break out a blog post explaining it here.\nThanks, and check back soon!\n","pubDate":"2024-09-07","title":"First Post"}];
+    var search_theEnd = "The End";
+    var search_nothing = "Nothing was found";
+    var search_found = "Found";
+    var search_result = "result";
+    var search_results = "results";
+    var enable_mermaid =  null ;
+
+    var baseURL = "http://localhost:1313/";
+</script>
+
+
+
+
+
+        
+    </body>
+</html>
+
