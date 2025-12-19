@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Maror Security</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>http://localhost:59792/posts/</link>
     <description>Recent content in Posts on Maror Security</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 17 Dec 2025 17:11:40 -0500</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:59792/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Source dive: the header files of W. Richard Stevens</title>
-      <link>http://localhost:1313/posts/header-files-of-stevens/</link>
+      <link>http://localhost:59792/posts/header-files-of-stevens/</link>
       <pubDate>Wed, 17 Dec 2025 17:11:40 -0500</pubDate>
-      <guid>http://localhost:1313/posts/header-files-of-stevens/</guid>
-      <description>I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.&#xA;Source diving is a term borrowed from players and hackers of the rogue-like video game NetHack to describe a method of examining the source code of a system.</description>
+      <guid>http://localhost:59792/posts/header-files-of-stevens/</guid>
+      <description>&lt;p&gt;I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;Source diving&lt;/em&gt; is a term borrowed from players and hackers of the &lt;a href=&#34;https://nethackwiki.com/wiki/Source_diving&#34;&gt;rogue-like video game NetHack&lt;/a&gt; to describe a method of examining  the source code of a system. To source dive is not merely to read through code; it is a deliberate and judicious undertaking. It requires code written deliberately and judiciously.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Unemployment incident recovery resources</title>
-      <link>http://localhost:1313/posts/unemployment_incident_recovery_resources/</link>
+      <link>http://localhost:59792/posts/unemployment_incident_recovery_resources/</link>
       <pubDate>Sat, 21 Sep 2024 12:14:10 -0400</pubDate>
-      <guid>http://localhost:1313/posts/unemployment_incident_recovery_resources/</guid>
-      <description>Thank you for attending my talk, &amp;ldquo;Executing your unemployment incident response plan.&amp;rdquo; Slides will be posted eventually. Here are some resources I mentioned.&#xA;Negotiating Your Salary: How To Make $1000 a Minute on Amazon. This isn&amp;rsquo;t an affiliate link. I&amp;rsquo;m not above affiliate links, I&amp;rsquo;m just too lazy or busy to get one set up right now.</description>
+      <guid>http://localhost:59792/posts/unemployment_incident_recovery_resources/</guid>
+      <description>&lt;p&gt;Thank you for attending my talk, &amp;ldquo;Executing your unemployment incident response&#xA;plan.&amp;rdquo; Slides will be posted eventually. Here are some resources I mentioned.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://a.co/d/iDik4LY&#34;&gt;Negotiating Your Salary: How To Make $1000 a Minute&lt;/a&gt; on&#xA;Amazon. This isn&amp;rsquo;t an affiliate link. I&amp;rsquo;m not above affiliate links, I&amp;rsquo;m just&#xA;too lazy or busy to get one set up right now.&lt;/p&gt;</description>
     </item>
     <item>
       <title>First Post</title>
-      <link>http://localhost:1313/posts/first-post/</link>
+      <link>http://localhost:59792/posts/first-post/</link>
       <pubDate>Sat, 07 Sep 2024 05:22:18 -0400</pubDate>
-      <guid>http://localhost:1313/posts/first-post/</guid>
-      <description>First post!&#xA;Thanks for visiting my blog. I&amp;rsquo;m just getting things cranking around here, but let me explain to you who I am and what I&amp;rsquo;m up to.&#xA;I&amp;rsquo;m Mike Doyle and Maror Security is my consultancy. When I entered the computer science program at The Georgia Institute of Technology, I wanted to be a hotshot systems programmer.</description>
+      <guid>http://localhost:59792/posts/first-post/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/First_post&#34;&gt;First post!&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Thanks for visiting my blog. I&amp;rsquo;m just getting things cranking around here, but let me explain to you who I am and what I&amp;rsquo;m up to.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m Mike Doyle and Maror Security is my consultancy. When I entered the&#xA;computer science program at &lt;a href=&#34;https://gatech.edu&#34;&gt;The Georgia Institute of&#xA;Technology&lt;/a&gt;, I wanted to be a hotshot systems programmer.&#xA;Back then, almost nobody was getting paid to hack the linux kernel, so I&#xA;didn&amp;rsquo;t know how I was going to make this happen, but I had spunk.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
