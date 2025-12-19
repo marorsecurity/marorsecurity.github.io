@@ -9,11 +9,11 @@
     <lastBuildDate>Wed, 17 Dec 2025 17:11:40 -0500</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Header Files of Stevens</title>
+      <title>Source dive: the header files of W. Richard Stevens</title>
       <link>http://localhost:1313/posts/header-files-of-stevens/</link>
       <pubDate>Wed, 17 Dec 2025 17:11:40 -0500</pubDate>
       <guid>http://localhost:1313/posts/header-files-of-stevens/</guid>
-      <description></description>
+      <description>I like to blog about the art of writing secure, resilient, readable, writable system software. I like to find the patterns that make software pleasant to work with, and the anti-patterns that make it treacherous to maintain and operate.&#xA;Source diving is a term borrowed from players and hackers of the rogue-like video game NetHack to describe a method of examining the source code of a system.</description>
     </item>
     <item>
       <title>Unemployment incident recovery resources</title>

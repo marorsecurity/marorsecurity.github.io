@@ -237,6 +237,10 @@ hasCJKLanguage = false
         style = 'monokailight'
         tabWidth = 4
 
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
     # enable the following code if there are html statements in your md file
     # 如果md文件中有html语句，请启用以下代码
     # [markup.goldmark]
